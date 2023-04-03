@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
 	createAuthUserWithEmailAndPassword,
 	createUserDocumentFromAuth,
@@ -8,6 +8,7 @@ import {
 import FormInput from "../form-input/form-input.component";
 import "./sign-in-form.styles.scss";
 import Button from "../button/button.component";
+import { UserContext } from "../../context/user.context";
 
 const defaultFormFields = {
 	email: "",
@@ -18,7 +19,7 @@ const SignInForm = () => {
 	const [formFields, setFormFields] = useState(defaultFormFields); //keeping track of the states of the form
 	const { email, password } = formFields; //destructuring
 
-	console.log(formFields);
+	// const { setCurrentUser } = useContext(UserContext);
 
 	const resetFormFields = () => {
 		setFormFields(defaultFormFields);
@@ -26,18 +27,14 @@ const SignInForm = () => {
 
 	const signInWithGoogle = async () => {
 		const { user } = await signInWithGooglePopup();
-		await createUserDocumentFromAuth(user);
 	};
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 
 		try {
-			const response = await signInAuthUserWithEmailAndPassword(
-				email,
-				password
-			);
-			console.log(response);
+			const user = await signInAuthUserWithEmailAndPassword(email, password);
+			// setCurrentUser(user); //passing the signed in user to be able to access the app
 			resetFormFields();
 		} catch (e) {
 			//to switch between error codes
@@ -86,7 +83,7 @@ const SignInForm = () => {
 				<div className="buttons-container">
 					<Button type="submit">Sign In</Button>
 					<Button type="button" buttonType="google" onClick={signInWithGoogle}>
-						Googgle Sign In
+						Google Sign In
 					</Button>
 				</div>
 			</form>

@@ -4,11 +4,15 @@ import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+import { UserProvider } from "./context/user.context";
 
 ReactDOM.render(
 	<React.StrictMode>
 		<BrowserRouter>
-			<App />
+			{/* inside of my component tree, user provider will let user go through only the components they can access if validated */}
+			<UserProvider>
+				<App />
+			</UserProvider>
 		</BrowserRouter>
 	</React.StrictMode>,
 	document.getElementById("root")
