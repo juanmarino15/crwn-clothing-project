@@ -11,7 +11,16 @@ import {
 	onAuthStateChanged,
 } from "firebase/auth";
 
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import {
+	getFirestore,
+	doc,
+	getDoc,
+	setDoc,
+	collection,
+	writeBatch,
+	query,
+	getDocs,
+} from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -40,6 +49,39 @@ export const signInWithGoogleRedirect = () =>
 
 export const db = getFirestore();
 
+export const addCollectionAndDocuemnts = async (
+	collectionKey,
+	objectsToAdd
+) => {
+	const collectionRef = collection(db, collectionKey);
+
+	//using batch to create a transaction to write into db
+	const batch = writeBatch(db);
+
+	objectsToAdd.forEach((object) => {
+		const docRef = doc(collectionRef, object.title.toLowerCase());
+		batch.set(docRef, object);
+	});
+
+	await batch.commit();
+	console.log("done");
+};
+
+export const getCategoriesAndDocuments = async () => {
+	const collectionRef = collection(db, "categories");
+	const q = query(collectionRef);
+
+	const querySnapshot = await getDocs(q); //fetching document snapshots
+	//reducing over docs array to end up with objects
+	const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+		const { title, items } = docSnapshot.data(); //take off the title and items from the data
+		acc[title.toLowerCase()] = items;
+		return acc;
+	}, {}); //initial instance of object we want to create
+
+	return categoryMap;
+};
+
 export const createUserDocumentFromAuth = async (
 	userAuth,
 	additionalInformation = {}
@@ -48,8 +90,6 @@ export const createUserDocumentFromAuth = async (
 
 	//checking if a document exists
 	const userDocRef = doc(db, "users", userAuth.uid);
-
-	console.log(userDocRef);
 
 	//getting data into doc usersnapshot.exists() tells you if the instance exists
 	const userSnapshot = await getDoc(userDocRef);

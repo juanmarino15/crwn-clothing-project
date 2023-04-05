@@ -10,7 +10,8 @@ const App = () => {
 		<Routes>
 			<Route path="/" element={<Navigation />}>
 				<Route index element={<Home />} />
-				<Route path="shop" element={<Shop />} />
+				{/* matching all routes to shop. whatever is after / it wont matter, will get routed to shop component, then re routed to where it needs to go */}
+				<Route path="shop/*" element={<Shop />} />
 				<Route path="auth" element={<Authentication />} />
 				<Route path="checkout" element={<Checkout />} />
 			</Route>

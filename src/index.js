@@ -5,7 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { UserProvider } from "./context/user.context";
-import { ProductsProvider } from "./context/products.context";
+import { CategoriesProvider } from "./context/categories.context";
 import { CartProvider } from "./context/cart.context";
 
 ReactDOM.render(
@@ -13,11 +13,11 @@ ReactDOM.render(
 		<BrowserRouter>
 			{/* inside of my component tree, user provider will let user go through only the components they can access if validated */}
 			<UserProvider>
-				<ProductsProvider>
+				<CategoriesProvider>
 					<CartProvider>
 						<App />
 					</CartProvider>
-				</ProductsProvider>
+				</CategoriesProvider>
 			</UserProvider>
 		</BrowserRouter>
 	</React.StrictMode>,
