@@ -7,19 +7,21 @@ import { BrowserRouter } from "react-router-dom";
 import { UserProvider } from "./context/user.context";
 import { CategoriesProvider } from "./context/categories.context";
 import { CartProvider } from "./context/cart.context";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
 
 ReactDOM.render(
 	<React.StrictMode>
-		<BrowserRouter>
-			{/* inside of my component tree, user provider will let user go through only the components they can access if validated */}
-			<UserProvider>
+		<Provider store={store}>
+			<BrowserRouter>
+				{/* inside of my component tree, user provider will let user go through only the components they can access if validated */}
 				<CategoriesProvider>
 					<CartProvider>
 						<App />
 					</CartProvider>
 				</CategoriesProvider>
-			</UserProvider>
-		</BrowserRouter>
+			</BrowserRouter>
+		</Provider>
 	</React.StrictMode>,
 	document.getElementById("root")
 );
