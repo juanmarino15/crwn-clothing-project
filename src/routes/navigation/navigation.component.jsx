@@ -7,14 +7,16 @@ import {
 	NavLinks,
 	LogoContainer,
 } from "./navigation.styles.jsx";
-import { UserContext } from "../../context/user.context";
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
 import { CartContext } from "../../context/cart.context";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../store/user/user.selector";
 
 const Navigation = () => {
-	const { currentUser } = useContext(UserContext);
+	//useSelector returns the state of ALL reducers in an object form. need to access the reducer you need (state.user.currentuser)
+	const currentUser = useSelector(selectCurrentUser);
 	const { isCartOpen } = useContext(CartContext);
 
 	return (
