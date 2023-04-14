@@ -1,5 +1,5 @@
 import { Outlet, Link } from "react-router-dom";
-import { Fragment, useContext } from "react";
+import { Fragment } from "react";
 import { ReactComponent as CrwnLogo } from "../../assets/crown.svg";
 import {
 	NavigationContainer,
@@ -10,14 +10,15 @@ import {
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
-import { CartContext } from "../../context/cart.context";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../store/user/user.selector";
+import { selectIsCartOpen } from "../../store/cart/cart.selector";
 
 const Navigation = () => {
 	//useSelector returns the state of ALL reducers in an object form. need to access the reducer you need (state.user.currentuser)
 	const currentUser = useSelector(selectCurrentUser);
-	const { isCartOpen } = useContext(CartContext);
+	// const { isCartOpen } = useContext(CartContext);
+	const isCartOpen = useSelector(selectIsCartOpen);
 
 	return (
 		<Fragment>

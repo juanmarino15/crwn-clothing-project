@@ -73,13 +73,7 @@ export const getCategoriesAndDocuments = async () => {
 
 	const querySnapshot = await getDocs(q); //fetching document snapshots
 	//reducing over docs array to end up with objects
-	const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
-		const { title, items } = docSnapshot.data(); //take off the title and items from the data
-		acc[title.toLowerCase()] = items;
-		return acc;
-	}, {}); //initial instance of object we want to create
-
-	return categoryMap;
+	return querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
 };
 
 export const createUserDocumentFromAuth = async (
