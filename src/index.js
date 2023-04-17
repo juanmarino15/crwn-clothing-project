@@ -5,15 +5,18 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import { store } from "./store/store";
+import { store, persistor } from "./store/store";
+import { PersistGate } from "redux-persist/integration/react";
 
 ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>
-			<BrowserRouter>
-				{/* inside of my component tree, user provider will let user go through only the components they can access if validated */}
-				<App />
-			</BrowserRouter>
+			<PersistGate persistor={persistor} loading={null}>
+				<BrowserRouter>
+					{/* inside of my component tree, user provider will let user go through only the components they can access if validated */}
+					<App />
+				</BrowserRouter>
+			</PersistGate>
 		</Provider>
 	</React.StrictMode>,
 	document.getElementById("root")

@@ -18,3 +18,8 @@ export const selectCategoriesMap = createSelector(
 			return acc;
 		}, {})
 ); //initial instance of object we want to create
+
+export const selectCategoriesIsLoading = createSelector(
+	[selectCategoryReducer],
+	(categoriesSlice) => categoriesSlice.isLoading
+);
