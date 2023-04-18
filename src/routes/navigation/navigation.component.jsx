@@ -10,15 +10,19 @@ import {
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser } from "../../store/user/user.selector";
 import { selectIsCartOpen } from "../../store/cart/cart.selector";
+import { signOutStart } from "../../store/user/user.action";
 
 const Navigation = () => {
+	const dispatch = useDispatch();
 	//useSelector returns the state of ALL reducers in an object form. need to access the reducer you need (state.user.currentuser)
 	const currentUser = useSelector(selectCurrentUser);
 	// const { isCartOpen } = useContext(CartContext);
 	const isCartOpen = useSelector(selectIsCartOpen);
+
+	const signOutUser = () => dispatch(signOutStart());
 
 	return (
 		<Fragment>
