@@ -7,6 +7,8 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store, persistor } from "./store/store";
 import { PersistGate } from "redux-persist/integration/react";
+import { Elements } from "@stripe/react-stripe-js";
+import { stripePromise } from "./utils/stripe/stripe.utils";
 
 ReactDOM.render(
 	<React.StrictMode>
@@ -14,7 +16,10 @@ ReactDOM.render(
 			<PersistGate persistor={persistor} loading={null}>
 				<BrowserRouter>
 					{/* inside of my component tree, user provider will let user go through only the components they can access if validated */}
-					<App />
+					<Elements stripe={stripePromise}>
+						{/* elements is to register the app in stripe */}
+						<App />
+					</Elements>
 				</BrowserRouter>
 			</PersistGate>
 		</Provider>
