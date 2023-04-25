@@ -18,5 +18,5 @@ export type Category = {
 };
 
 export type CategoryMap = {
-	[key: string]: CategoryItem[];
+	[key: string]: CategoryItem[] | undefined;
 };

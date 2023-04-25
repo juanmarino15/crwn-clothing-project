@@ -7,9 +7,9 @@ import {
 import { AnyAction } from "redux";
 
 export type CategoriesState = {
-	readonly categories: Category[];
-	readonly isLoading: boolean;
-	readonly error: Error | null;
+	readonly categories?: Category[];
+	readonly isLoading?: boolean;
+	readonly error?: Error | null;
 };
 
 export const CATEGORIES_INITIAL_STATE: CategoriesState = {
