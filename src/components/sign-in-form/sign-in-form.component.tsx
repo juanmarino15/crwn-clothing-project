@@ -1,10 +1,7 @@
-import { useContext, useState } from "react";
-import {
-	signInWithGooglePopup,
-	signInAuthUserWithEmailAndPassword,
-} from "../../utils/firebase/firebase.utils";
+import { ChangeEvent, FormEvent, useState } from "react";
+
 import FormInput from "../form-input/form-input.component";
-import "./sign-in-form.styles.scss";
+import { SignInContainer, ButtonsContainer } from "./sign-in-form.styles";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 import {
 	emailSignInStart,
@@ -32,7 +29,7 @@ const SignInForm = () => {
 		dispatch(googleSignInStart());
 	};
 
-	const handleSubmit = async (event) => {
+	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
 		try {
@@ -41,7 +38,7 @@ const SignInForm = () => {
 			resetFormFields();
 		} catch (e) {
 			//to switch between error codes
-			switch (e.code) {
+			switch (e) {
 				case "auth/wrong-password":
 					alert("incorrect password for email");
 					break;
@@ -49,12 +46,12 @@ const SignInForm = () => {
 					alert("no user associated with this email");
 					break;
 				default:
-					console.log(e.message);
+					console.log(e);
 			}
 		}
 	};
 
-	const handleChange = (event) => {
+	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = event.target; //binding the name of the input field to the state object
 
 		setFormFields({ ...formFields, [name]: value });
@@ -62,9 +59,9 @@ const SignInForm = () => {
 
 	//name is the bind from the input box to the defaultFormsField object. Value is the actual value that the object now contains
 	return (
-		<div className="sign-in-container">
+		<SignInContainer>
 			<h2>Already have an account?</h2>
-			<span>Sign up your email and password</span>
+			<span>Sign in with your email and password</span>
 			<form onSubmit={handleSubmit}>
 				<FormInput
 					label="Email"
@@ -83,18 +80,18 @@ const SignInForm = () => {
 					name="password"
 					value={password}
 				/>
-				<div className="buttons-container">
+				<ButtonsContainer>
 					<Button type="submit">Sign In</Button>
 					<Button
-						type="button"
 						buttonType={BUTTON_TYPE_CLASSES.google}
+						type="button"
 						onClick={signInWithGoogle}
 					>
-						Google Sign In
+						Sign In With Google
 					</Button>
-				</div>
+				</ButtonsContainer>
 			</form>
-		</div>
+		</SignInContainer>
 	);
 };
 

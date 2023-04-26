@@ -3,7 +3,6 @@ import CategoriesPreview from "../categories-preview/categories-preview";
 import Category from "../category/category.component";
 import { useEffect } from "react";
 import { fetchCategoriesStart } from "../../store/categories/category.action";
-import { getCategoriesAndDocuments } from "../../utils/firebase/firebase.utils.js";
 import { useDispatch } from "react-redux";
 
 import "./shops.styles.scss";

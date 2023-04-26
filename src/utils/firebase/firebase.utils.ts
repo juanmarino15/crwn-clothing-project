@@ -91,9 +91,9 @@ export type AdditionalInformation = {
 };
 
 export type UserData = {
-	createdAt: Date;
-	displayName: string;
-	email: string;
+	createdAt?: Date;
+	displayName?: string;
+	email?: string;
 };
 
 export const createUserDocumentFromAuth = async (
@@ -139,8 +139,8 @@ export const createAuthUserWithEmailAndPassword = async (
 };
 
 export const signInAuthUserWithEmailAndPassword = async (
-	email: string,
-	password: string
+	email?: string,
+	password?: string
 ) => {
 	if (!email || !password) return;
 
